@@ -89,64 +89,81 @@ for (let key in window) {
 }
 
 // 快速精確計算兩點經緯度距離 (公里)
+
+<script>
+// 找到 Leaflet 地圖物件並綁定到 window.myMap
+setTimeout(function() {
+  for (let key in window) {
+    if (key.startsWith("map_") && window[key] && typeof window[key].addLayer === 'function') {
+      window.myMap = window[key];
+      break;
+    }
+  }
+}, 500);
+
 function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // 地球半徑 (km)
+  const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
   const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
             Math.sin(dLon/2) * Math.sin(dLon/2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return (R * c * 1.28).toFixed(1); // 乘上台灣幹道曲折係數 1.28
+  return (R * c * 1.28).toFixed(1);
 }
 
 function setPoint(type, name, lat, lng) {
+  if (!window.myMap) {
+    for (let key in window) {
+      if (key.startsWith("map_") && window[key] && typeof window[key].addLayer === 'function') {
+        window.myMap = window[key];
+        break;
+      }
+    }
+  }
+
   if (type === 'start') {
-    pStart = [lat, lng];
+    pStart = [parseFloat(lat), parseFloat(lng)];
     startName = name;
     document.getElementById('route-msg').innerHTML = '起點：<span style="color:#16a34a">' + name + '</span> (請點選迄點)';
     document.getElementById('route-action').style.display = 'none';
   } else {
-    pEnd = [lat, lng];
+    pEnd = [parseFloat(lat), parseFloat(lng)];
     endName = name;
   }
 
-  if (pStart && pEnd && foliumMap) {
-    if (navLine) foliumMap.removeLayer(navLine);
+  // 關閉目前開啟的 popup
+  if (window.myMap) {
+    window.myMap.closePopup();
+  }
 
-    // 0 秒本機瞬時繪製行車動線 (帶流光動效)
+  if (pStart && pEnd && window.myMap) {
+    if (navLine) {
+      window.myMap.removeLayer(navLine);
+    }
+
     navLine = L.polyline([pStart, pEnd], {
       color: '#0284c7',
       weight: 6,
-      opacity: 0.85,
+      opacity: 0.9,
       dashArray: '8, 8'
-    }).addTo(foliumMap);
+    }).addTo(window.myMap);
 
-    foliumMap.fitBounds(navLine.getBounds(), { padding: [40, 40] });
+    window.myMap.fitBounds(navLine.getBounds(), { padding: [50, 50] });
 
     let dist = getDistance(pStart[0], pStart[1], pEnd[0], pEnd[1]);
-    let mins = Math.round(dist * 1.6); // 預估行車時間 (含紅綠燈與國道平均)
+    let mins = Math.round(dist * 1.6);
 
     document.getElementById('route-msg').innerHTML = 
-      '預估路程：<b>' + dist + ' 公里</b> (約 <b>' + mins + ' 分鐘</b>)';
+      '路程預估：<b>' + dist + ' 公里</b> (約 <b>' + mins + ' 分鐘</b>)';
 
-    // 產生官方 Google Maps 導航連結
     let gmapUrl = 'https://www.google.com/maps/dir/?api=1&origin=' + pStart[0] + ',' + pStart[1] + '&destination=' + pEnd[0] + ',' + pEnd[1] + '&travelmode=driving';
     document.getElementById('gmap-link').href = gmapUrl;
     document.getElementById('route-action').style.display = 'block';
   }
 }
-
-function clearNav() {
-  if (navLine && foliumMap) {
-    foliumMap.removeLayer(navLine);
-    navLine = null;
-  }
-  pStart = null; pEnd = null;
-  document.getElementById('route-msg').innerText = '點選任兩間門市/車站規劃動線';
-  document.getElementById('route-action').style.display = 'none';
-}
 </script>
+
 
 </body>
 <script>
