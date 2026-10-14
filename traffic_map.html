@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>屈臣氏防損責任轄區-交通路網與巡檢動線</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f8fafc;
+    font-family: 'Noto Sans TC', -apple-system, sans-serif;
+    color: #334155;
+    padding: 12px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    border-bottom: 2px solid #00989e;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .title { font-size: 17px; font-weight: 900; color: #0f172a; }
+  .subtitle { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .badge { background: #00989e; color: white; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; }
+
+  .corridor-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .card {
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .card.zone-1 { border-left: 4px solid #0284c7; }
+  .card.zone-2 { border-left: 4px solid #10b981; }
+  .card.zone-3 { border-left: 4px solid #f43f5e; background: #fff1f2; border-color: #fecdd3; }
+  .card-title { font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+  .row { font-size: 11px; line-height: 1.6; margin-bottom: 4px; }
+  .tag { font-size: 9.5px; font-weight: bold; padding: 1px 5px; border-radius: 3px; display: inline-block; margin-right: 4px; }
+  .tag-red { background: #fee2e2; color: #b91c1c; }
+  .tag-blue { background: #e0f2fe; color: #0369a1; }
+  .tag-purple { background: #f3e8ff; color: #7e22ce; }
+
+  .table-box {
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 12px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th { background: #f1f5f9; padding: 6px 8px; text-align: left; color: #475569; border-bottom: 2px solid #cbd5e1; }
+  td { padding: 6px 8px; border-bottom: 1px solid #f1f5f9; }
+
+  .strategy-box {
+    background: #f0fdf4;
+    border-left: 3.5px solid #16a34a;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #166534;
+  }
+  .footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div>
+      <div class="title">屈臣氏防損責任轄區 ｜ 交通路網與巡檢動線</div>
+      <div class="subtitle">新竹以南至臺中以北跨縣市據點（合計 96 家門市）與國道、高鐵、臺鐵樞紐解析</div>
+    </div>
+    <div class="badge">交通骨幹分析</div>
+  </div>
+
+  <div class="corridor-grid">
+    <div class="card zone-1">
+      <div class="card-title">【新竹生活圈】共 22 家 (市12 / 縣10)</div>
+      <div class="row"><span class="tag tag-red">國道1號</span> 竹北交流道 (91K)、新竹交流道 (95K)</div>
+      <div class="row"><span class="tag tag-blue">鐵道樞紐</span> 新竹火車站、竹北車站、高鐵新竹站</div>
+      <div class="row"><strong>動線重點：</strong>站前商圈、光復路學區軸線，可走台68快速道路橫向串聯竹東門市。</div>
+    </div>
+
+    <div class="card zone-2">
+      <div class="card-title">【苗栗核心圈】共 10 家 (南北狹長分佈)</div>
+      <div class="row"><span class="tag tag-red">國道1號</span> 頭份交流道 (110K)、苗栗交流道 (132K)</div>
+      <div class="row"><span class="tag tag-blue">鐵道樞紐</span> 竹南火車站、苗栗車站、高鐵苗栗站</div>
+      <div class="row"><strong>動線重點：</strong>頭份/竹南核心雙城，利用國1搭配台72快速道路高效率巡查公館與苗栗市。</div>
+    </div>
+
+    <div class="card zone-3">
+      <div class="card-title">【臺中市責任圈】共 64 家 (全區樞紐大本營)</div>
+      <div class="row"><span class="tag tag-red">高速動脈</span> 國1 豐原/大雅/台中/南屯 ＋ 國3 沙鹿交流道</div>
+      <div class="row"><span class="tag tag-purple">快速環線</span> 台74號快速道路（全區環狀巡防必備幹道）</div>
+      <div class="row"><span class="tag tag-blue">大眾運輸</span> 台中火車站、高鐵台中站 (烏日)、台中捷運綠線</div>
+      <div class="row"><strong>動線重點：</strong>以台74線環線為核心，切分「市區商場(Lalaport)」、「夜市學區(逢甲/一中)」、「屯區」與「海線沙鹿」分組集束巡檢。</div>
+    </div>
+  </div>
+
+  <div class="table-box">
+    <div style="font-weight:bold;font-size:12px;margin-bottom:6px;color:#0f172a;">幹線走廊：國道及快速道路巡查優勢</div>
+    <table>
+      <thead>
+        <tr>
+          <th width="22%">幹道路線</th>
+          <th width="38%">重要交流道節點</th>
+          <th width="40%">防損稽核車程優勢</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>國道1號</strong></td>
+          <td>竹北、新竹、頭份、苗栗、大雅</td>
+          <td>串聯新竹市區、頭份商圈與台中市中心主幹道</td>
+        </tr>
+        <tr>
+          <td><strong>國道3號</strong></td>
+          <td>香山、竹南、後龍、通霄、沙鹿</td>
+          <td>避開市區塞車，快速往返苗栗海線與台中沙鹿門市</td>
+        </tr>
+        <tr>
+          <td><strong>台74號</strong></td>
+          <td>崇德、潭子、太原、市政、五權</td>
+          <td>台中64家門市跨區巡防必備快速環狀線</td>
+        </tr>
+        <tr>
+          <td><strong>台68 / 72</strong></td>
+          <td>南寮-竹東 / 後龍-公館</td>
+          <td>橫向快速貫穿新竹市與苗栗山線門市</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="strategy-box">
+    <strong>防損稽核實務巡查建議：</strong>新竹與苗栗門市多集中於台鐵車站前中正路、光復路等傳統幹道商圈；台中 64 家門市則呈現「環狀與大型購物中心高客流」結構（如 Lalaport 門市）。建議巡店動線以「國道 1 號」為南北主骨幹，搭配台中「台 74 線」進行分區集束稽核，兼顧盤損監控、退貨異常查核與突發調閱之效率。
+  </div>
+
+  <div class="footer">
+    <div>台灣屈臣氏個人用品商店股份有限公司 ｜ 稽核管理部-防損職缺巡檢地圖</div>
+    <div>責任區範圍：新竹以南至臺中以北 (合計 96 家)</div>
+  </div>
+</div>
+
+</body>
+</html>
