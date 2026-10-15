@@ -89,36 +89,50 @@ function switchView(tab) {
 
 
 
-<!-- 訪客雙軌回傳 (GET + POST 兼容) -->
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-<form id="track_form" action="https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec" method="POST" target="hidden_iframe" style="display:none;">
-  <input type="hidden" name="store" value="屈臣氏專案">
+
+
+
+<!-- 訪客自動日誌追蹤 (精準對齊 processForm 欄位) -->
+<iframe name="gas_hidden_frame" id="gas_hidden_frame" style="display:none;"></iframe>
+<form id="gas_auto_form" action="https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec" method="POST" target="gas_hidden_frame" style="display:none;">
+  <input type="hidden" name="action" value="feedback">
   <input type="hidden" name="storeName" value="屈臣氏專案">
-  <input type="hidden" name="type" value="訪客造訪">
   <input type="hidden" name="category" value="訪客造訪">
-  <input type="hidden" name="content" id="form_content" value="造訪網頁：屈臣氏防損巡檢導覽(96家)">
-  <input type="hidden" name="message" id="form_message" value="造訪網頁：屈臣氏防損巡檢導覽(96家)">
+  <input type="hidden" name="comment" id="gas_comment_field" value="造訪網頁：屈臣氏防損責任區巡檢導覽(96家)">
 </form>
 
 <script>
 (function() {
   try {
-    var detail = "造訪：屈臣氏防損導覽(96家) | 來源：" + (document.referrer || "直接點開") + " | 裝置：" + (navigator.userAgent || "");
-    document.getElementById("form_content").value = detail;
-    document.getElementById("form_message").value = detail;
-    
-    // 軌道一：POST 送出表單 (對應 doPost)
-    document.getElementById("track_form").submit();
+    var now = new Date();
+    var timeStr = now.getFullYear() + "/" + 
+                  String(now.getMonth() + 1).padStart(2, '0') + "/" + 
+                  String(now.getDate()).padStart(2, '0') + " " + 
+                  String(now.getHours()).padStart(2, '0') + ":" + 
+                  String(now.getMinutes()).padStart(2, '0') + ":" + 
+                  String(now.getSeconds()).padStart(2, '0');
 
-    // 軌道二：GET 發送 (對應 doGet)
-    var url = "https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec";
+    var detail = "造訪屈臣氏導覽 | 時間：" + timeStr + " | 來源：" + (document.referrer || "直接開啟/面試官") + " | 裝置：" + (navigator.userAgent || "");
+    
+    // 設定 comment 欄位值
+    var commentInput = document.getElementById("gas_comment_field");
+    if (commentInput) {
+      commentInput.value = detail;
+    }
+
+    // 自動以 POST 送出表單到隱藏 iframe (保證跨域穿透成功)
+    var form = document.getElementById("gas_auto_form");
+    if (form) {
+      form.submit();
+    }
+
+    // 備援雙保險：若後端有改寫支援 GET
     var params = new URLSearchParams({
-      store: "屈臣氏專案",
-      type: "訪客造訪",
-      content: detail,
-      message: detail
+      storeName: "屈臣氏專案",
+      category: "訪客造訪",
+      comment: detail
     });
-    fetch(url + "?" + params.toString(), { method: "GET", mode: "no-cors" }).catch(function(){});
+    fetch("https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec?" + params.toString(), { method: "GET", mode: "no-cors" }).catch(function(){});
   } catch(e) {}
 })();
 </script>
