@@ -80,17 +80,31 @@ function switchView(tab) {
 </script>
 
 
-<!-- 訪客自動日誌追蹤 (真實 GAS 意見回饋試算表後端) -->
+
+
+
+<!-- 訪客自動日誌追蹤 (屈臣氏專用標記) -->
 <script>
 (function() {
   try {
+    var now = new Date();
+    // 格式化為台灣標準時間字串 (YYYY/MM/DD HH:mm:ss)
+    var timeStr = now.getFullYear() + "/" + 
+                  String(now.getMonth() + 1).padStart(2, '0') + "/" + 
+                  String(now.getDate()).padStart(2, '0') + " " + 
+                  String(now.getHours()).padStart(2, '0') + ":" + 
+                  String(now.getMinutes()).padStart(2, '0') + ":" + 
+                  String(now.getSeconds()).padStart(2, '0');
+
     var url = "https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec";
     var params = new URLSearchParams({
       action: "log_visit",
-      page: "屈臣氏防損巡檢導覽(96家)",
+      project: "屈臣氏專案",
+      page: "屈臣氏防損責任區巡檢導覽(96家)",
+      visit_time: timeStr,
       ua: navigator.userAgent || "",
       screen: window.screen ? (window.screen.width + "x" + window.screen.height) : "",
-      ref: document.referrer || "直接點開"
+      ref: document.referrer || "面試官/直接開啟"
     });
 
     fetch(url + "?" + params.toString(), {
