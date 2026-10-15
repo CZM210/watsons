@@ -83,30 +83,27 @@ function switchView(tab) {
 
 
 
-<!-- 訪客自動日誌追蹤 (屈臣氏專用標記) -->
+
+
+
+<!-- 訪客自動回傳至 Feedback 分頁 -->
 <script>
 (function() {
   try {
-    var now = new Date();
-    // 格式化為台灣標準時間字串 (YYYY/MM/DD HH:mm:ss)
-    var timeStr = now.getFullYear() + "/" + 
-                  String(now.getMonth() + 1).padStart(2, '0') + "/" + 
-                  String(now.getDate()).padStart(2, '0') + " " + 
-                  String(now.getHours()).padStart(2, '0') + ":" + 
-                  String(now.getMinutes()).padStart(2, '0') + ":" + 
-                  String(now.getSeconds()).padStart(2, '0');
-
     var url = "https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec";
+    
+    // 依據原本意見回饋箱的參數格式封裝
     var params = new URLSearchParams({
-      action: "log_visit",
-      project: "屈臣氏專案",
-      page: "屈臣氏防損責任區巡檢導覽(96家)",
-      visit_time: timeStr,
-      ua: navigator.userAgent || "",
-      screen: window.screen ? (window.screen.width + "x" + window.screen.height) : "",
-      ref: document.referrer || "面試官/直接開啟"
+      store: "屈臣氏專案",
+      storeName: "屈臣氏專案",
+      type: "訪客造訪",
+      category: "訪客造訪",
+      content: "造訪網頁：屈臣氏防損責任區巡檢導覽(96家) | 來源：" + (document.referrer || "面試官/直接開啟") + " | 裝置：" + (navigator.userAgent || ""),
+      message: "造訪網頁：屈臣氏防損責任區巡檢導覽(96家) | 來源：" + (document.referrer || "面試官/直接開啟") + " | 裝置：" + (navigator.userAgent || ""),
+      feedback: "造訪網頁：屈臣氏防損責任區巡檢導覽(96家) | 來源：" + (document.referrer || "面試官/直接開啟")
     });
 
+    // 以非同步 fetch 背景發送
     fetch(url + "?" + params.toString(), {
       method: "GET",
       mode: "no-cors"
