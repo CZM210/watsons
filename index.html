@@ -79,5 +79,30 @@ function switchView(tab) {
 }
 </script>
 
+
+<!-- 訪客自動日誌追蹤 (真實 GAS 意見回饋試算表後端) -->
+<script>
+(function() {
+  try {
+    var url = "https://script.google.com/macros/s/AKfycbxDFqVzHpbETfBoHZCAx4p0hblwClwSZo8Xikfb2CsL/exec";
+    var params = new URLSearchParams({
+      action: "log_visit",
+      page: "屈臣氏防損巡檢導覽(96家)",
+      ua: navigator.userAgent || "",
+      screen: window.screen ? (window.screen.width + "x" + window.screen.height) : "",
+      ref: document.referrer || "直接點開"
+    });
+
+    fetch(url + "?" + params.toString(), {
+      method: "GET",
+      mode: "no-cors"
+    }).catch(function() {
+      var img = new Image();
+      img.src = url + "?" + params.toString();
+    });
+  } catch(e) {}
+})();
+</script>
+
 </body>
 </html>
